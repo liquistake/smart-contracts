@@ -1,0 +1,297 @@
+{
+	"compiler": {
+		"version": "0.8.19+commit.7dd6d404"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "_pendingWithdrawAmounts",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "_withdrawDelay",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getRewardTokenList",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "getStaker",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "addr",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "amount",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "isDelegateValidator",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "delegateValidatorIndex",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "description",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "commission",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "delegatorStakedAmount",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "delegatorCount",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "isDelegator",
+								"type": "bool"
+							},
+							{
+								"internalType": "address",
+								"name": "parent",
+								"type": "address"
+							},
+							{
+								"internalType": "bool",
+								"name": "enableDelegation",
+								"type": "bool"
+							},
+							{
+								"internalType": "bool",
+								"name": "approvedToDelegate",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct IStakingProxy.Staker",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenAddr",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "stakerAddr",
+						"type": "address"
+					}
+				],
+				"name": "pendingRewards",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "rewardTokenListLength",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "validator",
+						"type": "address"
+					}
+				],
+				"name": "stake",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "unstake",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "withdrawUnstaked",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"pendingRewards(address,address)": {
+					"params": {
+						"stakerAddr": "The address to derive the pending awards for",
+						"tokenAddr": "The token address"
+					}
+				},
+				"stake(uint256,address)": {
+					"params": {
+						"amount": "The amount to stake",
+						"validator": "The validator to stake under"
+					}
+				},
+				"unstake(uint256)": {
+					"params": {
+						"amount": "The amount to unstake"
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"getRewardTokenList()": {
+					"notice": "Returns the rewardTokenList array"
+				},
+				"getStaker(address)": {
+					"notice": "Gets the specified Staker object"
+				},
+				"pendingRewards(address,address)": {
+					"notice": "Gets the pending rewards and commission fees to be paid out (as delegator) or pending commission fees (as validator)"
+				},
+				"rewardTokenListLength()": {
+					"notice": "Returns the length of the rewardTokenList array"
+				},
+				"stake(uint256,address)": {
+					"notice": "Stakes the specified amount for msg.sender under the specified validator"
+				},
+				"unstake(uint256)": {
+					"notice": "Unstakes locked funds from the validator of msg.sender"
+				},
+				"withdrawUnstaked()": {
+					"notice": "Withdraws pending unstaked WSX once the cooldown period has elapsed"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/IStakingProxy.sol": "IStakingProxy"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/IStakingProxy.sol": {
+			"keccak256": "0x06458b51f5733e194bd063082420a5b8659c263d9b1920599dfc0bce710c4f02",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://069bd3e3babe4afa626097278e9e3b38bb9d69b39970d857f56987286bdae93b",
+				"dweb:/ipfs/QmPEq3L62DQrQYvZtrxvp1nNy7HBGG3rc8Fyii2UQbFQKz"
+			]
+		}
+	},
+	"version": 1
+}

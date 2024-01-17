@@ -1,0 +1,77 @@
+{
+	"compiler": {
+		"version": "0.8.19+commit.7dd6d404"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "tokenAddrs",
+						"type": "address[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "amountOutMins",
+						"type": "uint256[]"
+					}
+				],
+				"name": "harvestAndCompoundStake",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"harvestAndCompoundStake(address[],uint256[])": {
+					"params": {
+						"amountOutMins": "The array of reward token minimum swap output amounts",
+						"tokenAddrs": "The array of reward token addresses"
+					}
+				}
+			},
+			"title": "CompoundStake",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"harvestAndCompoundStake(address[],uint256[])": {
+					"notice": "Compound stakes based on the provided token addresses and corresponding amountOutMin amounts"
+				}
+			},
+			"notice": "This contract harvests staking rewards, swaps to WSX and restakes in a single tx to earn compounded rewards.",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/ICompoundStakeProxy.sol": "ICompoundStakeProxy"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/ICompoundStakeProxy.sol": {
+			"keccak256": "0x14d0b4513febb64ff238025d7d2393a0e33fa10d1b070be5ce43c24b6f6eed80",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5cadda342e3b54c1bf6681f52361b2d94912d2e06b62e2802adc77f4025fd5a9",
+				"dweb:/ipfs/QmU1aa8xVuYRsN9PZcpLMhyqHqmc3yFhS2vVwvbDePuHFZ"
+			]
+		}
+	},
+	"version": 1
+}

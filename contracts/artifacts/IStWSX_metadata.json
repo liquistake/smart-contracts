@@ -1,0 +1,659 @@
+{
+	"compiler": {
+		"version": "0.8.19+commit.7dd6d404"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "preRebaseTokenAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "postRebaseTokenAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "sharesAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "SharesBurnt",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "sharesValue",
+						"type": "uint256"
+					}
+				],
+				"name": "TransferShares",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_owner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_spender",
+						"type": "address"
+					}
+				],
+				"name": "allowance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "spender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "approve",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_account",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "decimals",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_spender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_subtractedValue",
+						"type": "uint256"
+					}
+				],
+				"name": "decreaseAllowance",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_sharesAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "getPooledWSXByShares",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_wsxAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "getSharesByPooledWSX",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getTotalPooledWSX",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getTotalShares",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_spender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_addedValue",
+						"type": "uint256"
+					}
+				],
+				"name": "increaseAllowance",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "name",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_account",
+						"type": "address"
+					}
+				],
+				"name": "sharesOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "symbol",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transfer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_sender",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_sharesAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "transferShares",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_sender",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_sharesAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "transferSharesFrom",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"events": {
+				"Approval(address,address,uint256)": {
+					"details": "Emitted when the allowance of a `spender` for an `owner` is set by a call to {approve}. `value` is the new allowance."
+				},
+				"SharesBurnt(address,uint256,uint256,uint256)": {
+					"details": "Reports simultaneously burnt shares amount and corresponding stETH amount. The stETH amount is calculated twice: before and after the burning incurred rebase.",
+					"params": {
+						"account": "holder of the burnt shares",
+						"postRebaseTokenAmount": "amount of stETH the burnt shares corresponded to after the burn",
+						"preRebaseTokenAmount": "amount of stETH the burnt shares corresponded to before the burn",
+						"sharesAmount": "amount of burnt shares"
+					}
+				},
+				"Transfer(address,address,uint256)": {
+					"details": "Emitted when `value` tokens are moved from one account (`from`) to another (`to`). Note that `value` may be zero."
+				},
+				"TransferShares(address,address,uint256)": {
+					"details": "emitted in pair with an ERC20-defined `Transfer` event."
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"allowance(address,address)": {
+					"details": "This value changes when `approve` or `transferFrom` is called.",
+					"returns": {
+						"_0": "the remaining number of tokens that `_spender` is allowed to spend on behalf of `_owner` through `transferFrom`. This is zero by default."
+					}
+				},
+				"approve(address,uint256)": {
+					"details": "See {IERC20-approve}. NOTE: If `value` is the maximum `uint256`, the allowance is not updated on `transferFrom`. This is semantically equivalent to an infinite approval. Requirements: - `spender` cannot be the zero address."
+				},
+				"balanceOf(address)": {
+					"details": "Balances are dynamic and equal the `_account`'s share in the amount of the total WSX controlled by the protocol. See `sharesOf`.",
+					"returns": {
+						"_0": "the amount of tokens owned by the `_account`."
+					}
+				},
+				"decimals()": {
+					"returns": {
+						"_0": "the number of decimals for getting user representation of a token amount."
+					}
+				},
+				"getPooledWSXByShares(uint256)": {
+					"returns": {
+						"_0": "the amount of WSX that corresponds to `_sharesAmount` token shares."
+					}
+				},
+				"getSharesByPooledWSX(uint256)": {
+					"returns": {
+						"_0": "the amount of shares that corresponds to `_wsxAmount` protocol-controlled WSX."
+					}
+				},
+				"getTotalPooledWSX()": {
+					"details": "The sum of all WSX balances in the protocol, equals to the total supply of stWSX.",
+					"returns": {
+						"_0": "the entire amount of WSX controlled by the protocol."
+					}
+				},
+				"getTotalShares()": {
+					"details": "The sum of all accounts' shares can be an arbitrary number, therefore it is necessary to store it in order to calculate each account's relative share.",
+					"returns": {
+						"_0": "the total amount of shares in existence."
+					}
+				},
+				"name()": {
+					"returns": {
+						"_0": "the name of the token."
+					}
+				},
+				"sharesOf(address)": {
+					"returns": {
+						"_0": "the amount of shares owned by `_account`."
+					}
+				},
+				"symbol()": {
+					"returns": {
+						"_0": "the symbol of the token, usually a shorter version of the name."
+					}
+				},
+				"totalSupply()": {
+					"details": "Always equals to `_getTotalPooledWSX()` since token amount is pegged to the total amount of WSX controlled by the protocol.",
+					"returns": {
+						"_0": "the amount of tokens in existence."
+					}
+				},
+				"transfer(address,uint256)": {
+					"details": "The `_amount` argument is the amount of tokens, not shares.",
+					"returns": {
+						"_0": "a boolean value indicating whether the operation succeeded. Emits a `Transfer` event. Emits a `TransferShares` event. Requirements: - `_recipient` cannot be the zero address. - the caller must have a balance of at least `_amount`. - the contract must not be paused."
+					}
+				},
+				"transferFrom(address,address,uint256)": {
+					"details": "The `_amount` argument is the amount of tokens, not shares.",
+					"returns": {
+						"_0": "a boolean value indicating whether the operation succeeded. Emits a `Transfer` event. Emits a `TransferShares` event. Emits an `Approval` event indicating the updated allowance. Requirements: - `_sender` and `_recipient` cannot be the zero addresses. - `_sender` must have a balance of at least `_amount`. - the caller must have allowance for `_sender`'s tokens of at least `_amount`. - the contract must not be paused."
+					}
+				},
+				"transferShares(address,uint256)": {
+					"details": "The `_sharesAmount` argument is the amount of shares, not tokens.",
+					"returns": {
+						"_0": "amount of transferred tokens. Emits a `TransferShares` event. Emits a `Transfer` event. Requirements: - `_recipient` cannot be the zero address. - the caller must have at least `_sharesAmount` shares. - the contract must not be paused."
+					}
+				},
+				"transferSharesFrom(address,address,uint256)": {
+					"details": "The `_sharesAmount` argument is the amount of shares, not tokens.",
+					"returns": {
+						"_0": "amount of transferred tokens. Emits a `TransferShares` event. Emits a `Transfer` event. Requirements: - `_sender` and `_recipient` cannot be the zero addresses. - `_sender` must have at least `_sharesAmount` shares. - the caller must have allowance for `_sender`'s tokens of at least `getPooledWSXByShares(_sharesAmount)`. - the contract must not be paused."
+					}
+				}
+			},
+			"stateVariables": {
+				"allowances": {
+					"details": "Allowances are nominated in tokens, not token shares."
+				},
+				"shares": {
+					"details": "StWSX balances are dynamic and are calculated based on the accounts' shares and the total amount of Ether controlled by the protocol. Account shares aren't normalized, so the contract also stores the sum of all shares to calculate each account's token balance which equals to:   shares[account] * _getTotalPooledEther() / _getTotalShares()"
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"events": {
+				"SharesBurnt(address,uint256,uint256,uint256)": {
+					"notice": "An executed `burnShares` request"
+				},
+				"TransferShares(address,address,uint256)": {
+					"notice": "An executed shares transfer from `sender` to `recipient`."
+				}
+			},
+			"kind": "user",
+			"methods": {
+				"decreaseAllowance(address,uint256)": {
+					"notice": "Atomically decreases the allowance granted to `_spender` by the caller by `_subtractedValue`. This is an alternative to `approve` that can be used as a mitigation for problems described in: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b709eae01d1da91902d06ace340df6b324e6f049/contracts/token/ERC20/IERC20.sol#L57 Emits an `Approval` event indicating the updated allowance. Requirements: - `_spender` cannot be the zero address. - `_spender` must have allowance for the caller of at least `_subtractedValue`."
+				},
+				"increaseAllowance(address,uint256)": {
+					"notice": "Atomically increases the allowance granted to `_spender` by the caller by `_addedValue`. This is an alternative to `approve` that can be used as a mitigation for problems described in: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b709eae01d1da91902d06ace340df6b324e6f049/contracts/token/ERC20/IERC20.sol#L57 Emits an `Approval` event indicating the updated allowance. Requirements: - `_spender` cannot be the the zero address."
+				},
+				"transfer(address,uint256)": {
+					"notice": "Moves `_amount` tokens from the caller's account to the `_recipient` account."
+				},
+				"transferFrom(address,address,uint256)": {
+					"notice": "Moves `_amount` tokens from `_sender` to `_recipient` using the allowance mechanism. `_amount` is then deducted from the caller's allowance."
+				},
+				"transferShares(address,uint256)": {
+					"notice": "Moves `_sharesAmount` token shares from the caller's account to the `_recipient` account."
+				},
+				"transferSharesFrom(address,address,uint256)": {
+					"notice": "Moves `_sharesAmount` token shares from the `_sender` account to the `_recipient` account."
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/IStWSX.sol": "IStWSX"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0x4ce6e9f30dba5ae30f26321dc851b669caf3f953f8c832304d05df2a523f1af3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://eb24de66bbfa42093a20d448cb2564655525cba0342035a42a37654e5d922deb",
+				"dweb:/ipfs/QmYgnFHamrgy5qurrxVLR1qDb7MirvGEoxCVwqiF1YvDMf"
+			]
+		},
+		"contracts/IStWSX.sol": {
+			"keccak256": "0xde4fdb18d6a4656ede531ad248aeb898d92b2581b3f506a52d92622585d3a9cf",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://60c428d2c85f8ac70ce3d1592422bc1357c4114e1fc4178ad344cadbcf5a585e",
+				"dweb:/ipfs/QmRjmnMjHMHvZHpEd7cgn1LVMzgNp27M6tH87LbadAVVCd"
+			]
+		}
+	},
+	"version": 1
+}
