@@ -194,30 +194,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "_spender",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_subtractedValue",
-						"type": "uint256"
-					}
-				],
-				"name": "decreaseAllowance",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "uint256",
 						"name": "_sharesAmount",
 						"type": "uint256"
@@ -277,30 +253,6 @@
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_spender",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_addedValue",
-						"type": "uint256"
-					}
-				],
-				"name": "increaseAllowance",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -600,12 +552,6 @@
 			},
 			"kind": "user",
 			"methods": {
-				"decreaseAllowance(address,uint256)": {
-					"notice": "Atomically decreases the allowance granted to `_spender` by the caller by `_subtractedValue`. This is an alternative to `approve` that can be used as a mitigation for problems described in: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b709eae01d1da91902d06ace340df6b324e6f049/contracts/token/ERC20/IERC20.sol#L57 Emits an `Approval` event indicating the updated allowance. Requirements: - `_spender` cannot be the zero address. - `_spender` must have allowance for the caller of at least `_subtractedValue`."
-				},
-				"increaseAllowance(address,uint256)": {
-					"notice": "Atomically increases the allowance granted to `_spender` by the caller by `_addedValue`. This is an alternative to `approve` that can be used as a mitigation for problems described in: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b709eae01d1da91902d06ace340df6b324e6f049/contracts/token/ERC20/IERC20.sol#L57 Emits an `Approval` event indicating the updated allowance. Requirements: - `_spender` cannot be the the zero address."
-				},
 				"transfer(address,uint256)": {
 					"notice": "Moves `_amount` tokens from the caller's account to the `_recipient` account."
 				},
@@ -647,11 +593,11 @@
 			]
 		},
 		"contracts/IStWSX.sol": {
-			"keccak256": "0xde4fdb18d6a4656ede531ad248aeb898d92b2581b3f506a52d92622585d3a9cf",
-			"license": "MIT",
+			"keccak256": "0x45f3aadedf6e464bc40ae09d0394452acc339b09b7b0f08ade44f5126d816246",
+			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://60c428d2c85f8ac70ce3d1592422bc1357c4114e1fc4178ad344cadbcf5a585e",
-				"dweb:/ipfs/QmRjmnMjHMHvZHpEd7cgn1LVMzgNp27M6tH87LbadAVVCd"
+				"bzz-raw://cd61b4dacb731d33bf20d960328614eeeb4a232f20e39bfb7b7d664546025256",
+				"dweb:/ipfs/Qma5igxqE4AHRVuBoiS9Zp4T3d6ofAsdYUnEVDkZFMZ6Yw"
 			]
 		}
 	},

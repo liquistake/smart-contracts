@@ -1,0 +1,738 @@
+{
+  "compiler": {
+    "version": "0.8.19+commit.7dd6d404"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "contract IStWSX",
+            "name": "_stWSX",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "allowance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "needed",
+            "type": "uint256"
+          }
+        ],
+        "name": "ERC20InsufficientAllowance",
+        "type": "error"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "balance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "needed",
+            "type": "uint256"
+          }
+        ],
+        "name": "ERC20InsufficientBalance",
+        "type": "error"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "approver",
+            "type": "address"
+          }
+        ],
+        "name": "ERC20InvalidApprover",
+        "type": "error"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "receiver",
+            "type": "address"
+          }
+        ],
+        "name": "ERC20InvalidReceiver",
+        "type": "error"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          }
+        ],
+        "name": "ERC20InvalidSender",
+        "type": "error"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+          }
+        ],
+        "name": "ERC20InvalidSpender",
+        "type": "error"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "Approval",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "Transfer",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "wstWSXUnwrapped",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "stWSXUnwrapped",
+            "type": "uint256"
+          }
+        ],
+        "name": "Unwrap",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "stWSXWrapped",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "wstWSXMinted",
+            "type": "uint256"
+          }
+        ],
+        "name": "Wrap",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+          }
+        ],
+        "name": "allowance",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "approve",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "balanceOf",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "decimals",
+        "outputs": [
+          {
+            "internalType": "uint8",
+            "name": "",
+            "type": "uint8"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_wstWSXAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "getStWSXByWstWSX",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_stWSXAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "getWstWSXByStWSX",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "name",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "stWSX",
+        "outputs": [
+          {
+            "internalType": "contract IStWSX",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "stWSXPerToken",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "symbol",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "tokensPerStWSX",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "totalSupply",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "transfer",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "transferFrom",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_wstWSXAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "unwrap",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_stWSXAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "wrap",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ],
+    "devdoc": {
+      "details": "It's an ERC20 token that represents the account's share of the total supply of stWSX tokens. WstWSX token's balance only changes on transfers, unlike StWSX that is also changed when oracles report staking rewards and penalties. It's a \"power user\" token for DeFi protocols which don't support rebasable tokens. The contract is also a trustless wrapper that accepts stWSX tokens and mints wstWSX in return. Then the user unwraps, the contract burns user's wstWSX and sends user locked stWSX in return.",
+      "errors": {
+        "ERC20InsufficientAllowance(address,uint256,uint256)": [
+          {
+            "details": "Indicates a failure with the `spender`’s `allowance`. Used in transfers.",
+            "params": {
+              "allowance": "Amount of tokens a `spender` is allowed to operate with.",
+              "needed": "Minimum amount required to perform a transfer.",
+              "spender": "Address that may be allowed to operate on tokens without being their owner."
+            }
+          }
+        ],
+        "ERC20InsufficientBalance(address,uint256,uint256)": [
+          {
+            "details": "Indicates an error related to the current `balance` of a `sender`. Used in transfers.",
+            "params": {
+              "balance": "Current balance for the interacting account.",
+              "needed": "Minimum amount required to perform a transfer.",
+              "sender": "Address whose tokens are being transferred."
+            }
+          }
+        ],
+        "ERC20InvalidApprover(address)": [
+          {
+            "details": "Indicates a failure with the `approver` of a token to be approved. Used in approvals.",
+            "params": {
+              "approver": "Address initiating an approval operation."
+            }
+          }
+        ],
+        "ERC20InvalidReceiver(address)": [
+          {
+            "details": "Indicates a failure with the token `receiver`. Used in transfers.",
+            "params": {
+              "receiver": "Address to which tokens are being transferred."
+            }
+          }
+        ],
+        "ERC20InvalidSender(address)": [
+          {
+            "details": "Indicates a failure with the token `sender`. Used in transfers.",
+            "params": {
+              "sender": "Address whose tokens are being transferred."
+            }
+          }
+        ],
+        "ERC20InvalidSpender(address)": [
+          {
+            "details": "Indicates a failure with the `spender` to be approved. Used in approvals.",
+            "params": {
+              "spender": "Address that may be allowed to operate on tokens without being their owner."
+            }
+          }
+        ]
+      },
+      "events": {
+        "Approval(address,address,uint256)": {
+          "details": "Emitted when the allowance of a `spender` for an `owner` is set by a call to {approve}. `value` is the new allowance."
+        },
+        "Transfer(address,address,uint256)": {
+          "details": "Emitted when `value` tokens are moved from one account (`from`) to another (`to`). Note that `value` may be zero."
+        }
+      },
+      "kind": "dev",
+      "methods": {
+        "allowance(address,address)": {
+          "details": "See {IERC20-allowance}."
+        },
+        "approve(address,uint256)": {
+          "details": "See {IERC20-approve}. NOTE: If `value` is the maximum `uint256`, the allowance is not updated on `transferFrom`. This is semantically equivalent to an infinite approval. Requirements: - `spender` cannot be the zero address."
+        },
+        "balanceOf(address)": {
+          "details": "See {IERC20-balanceOf}."
+        },
+        "constructor": {
+          "params": {
+            "_stWSX": "address of the StWSX token to wrap"
+          }
+        },
+        "decimals()": {
+          "details": "Returns the number of decimals used to get its user representation. For example, if `decimals` equals `2`, a balance of `505` tokens should be displayed to a user as `5.05` (`505 / 10 ** 2`). Tokens usually opt for a value of 18, imitating the relationship between Ether and Wei. This is the default value returned by this function, unless it's overridden. NOTE: This information is only used for _display_ purposes: it in no way affects any of the arithmetic of the contract, including {IERC20-balanceOf} and {IERC20-transfer}."
+        },
+        "getStWSXByWstWSX(uint256)": {
+          "params": {
+            "_wstWSXAmount": "amount of wstWSX"
+          },
+          "returns": {
+            "_0": "Amount of stWSX for a given wstWSX amount"
+          }
+        },
+        "getWstWSXByStWSX(uint256)": {
+          "params": {
+            "_stWSXAmount": "amount of stWSX"
+          },
+          "returns": {
+            "_0": "Amount of wstWSX for a given stWSX amount"
+          }
+        },
+        "name()": {
+          "details": "Returns the name of the token."
+        },
+        "stWSXPerToken()": {
+          "returns": {
+            "_0": "Amount of stWSX for 1 wstWSX"
+          }
+        },
+        "symbol()": {
+          "details": "Returns the symbol of the token, usually a shorter version of the name."
+        },
+        "tokensPerStWSX()": {
+          "returns": {
+            "_0": "Amount of wstWSX for a 1 stWSX"
+          }
+        },
+        "totalSupply()": {
+          "details": "See {IERC20-totalSupply}."
+        },
+        "transfer(address,uint256)": {
+          "details": "See {IERC20-transfer}. Requirements: - `to` cannot be the zero address. - the caller must have a balance of at least `value`."
+        },
+        "transferFrom(address,address,uint256)": {
+          "details": "See {IERC20-transferFrom}. Emits an {Approval} event indicating the updated allowance. This is not required by the EIP. See the note at the beginning of {ERC20}. NOTE: Does not update the allowance if the current allowance is the maximum `uint256`. Requirements: - `from` and `to` cannot be the zero address. - `from` must have a balance of at least `value`. - the caller must have allowance for ``from``'s tokens of at least `value`."
+        },
+        "unwrap(uint256)": {
+          "details": "Requirements:  - `_wstWSXAmount` must be non-zero  - msg.sender must have at least `_wstWSXAmount` wstWSX.",
+          "params": {
+            "_wstWSXAmount": "amount of wstWSX to unwrap in exchange for stWSX"
+          },
+          "returns": {
+            "_0": "Amount of stWSX user receives after unwrap"
+          }
+        },
+        "wrap(uint256)": {
+          "details": "Requirements:  - `_stWSXAmount` must be non-zero  - msg.sender must approve at least `_stWSXAmount` stWSX to this    contract.  - msg.sender must have at least `_stWSXAmount` of stWSX. User should first approve _stWSXAmount to the WstWSX contract",
+          "params": {
+            "_stWSXAmount": "amount of stWSX to wrap in exchange for wstWSX"
+          },
+          "returns": {
+            "_0": "Amount of wstWSX user receives after wrap"
+          }
+        }
+      },
+      "title": "stWSX token wrapper with static balances.",
+      "version": 1
+    },
+    "userdoc": {
+      "kind": "user",
+      "methods": {
+        "getStWSXByWstWSX(uint256)": {
+          "notice": "Get amount of stWSX for a given amount of wstWSX"
+        },
+        "getWstWSXByStWSX(uint256)": {
+          "notice": "Get amount of wstWSX for a given amount of stWSX"
+        },
+        "stWSXPerToken()": {
+          "notice": "Get amount of stWSX for a one wstWSX"
+        },
+        "tokensPerStWSX()": {
+          "notice": "Get amount of wstWSX for a one stWSX"
+        },
+        "unwrap(uint256)": {
+          "notice": "Exchanges wstWSX to stWSX"
+        },
+        "wrap(uint256)": {
+          "notice": "Exchanges stWSX to wstWSX"
+        }
+      },
+      "version": 1
+    }
+  },
+  "settings": {
+    "compilationTarget": {
+      "contracts/WstWSX.sol": "WstWSX"
+    },
+    "evmVersion": "paris",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "remappings": []
+  },
+  "sources": {
+    "@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {
+      "keccak256": "0x30745a46aa78a205c91a028629a2878d6d6416c747e2a13041c68588d3053df7",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://aeaea07fc60676cc3e2d2df8d36dd550ba8fa0bb1395178a9b764ab4c049d8a3",
+        "dweb:/ipfs/QmeDqVsPV63rJj2uNPfg7SG5Z1KNP6vNgBN1F78kEmz1Jg"
+      ]
+    },
+    "@openzeppelin/contracts/token/ERC20/ERC20.sol": {
+      "keccak256": "0x4b66493cca45dc0ba9bdfb0a60970f9278c11da8de004339944ced80b86c55c6",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://17bd597781651d2f92f83c60588ed3033665b9e99ba01b2ee64a9cc4f01833bb",
+        "dweb:/ipfs/Qmc1BpbKFzwVY5GcTFcShbgebCZNqXAWMorfZPHs43TL2S"
+      ]
+    },
+    "@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+      "keccak256": "0x4ce6e9f30dba5ae30f26321dc851b669caf3f953f8c832304d05df2a523f1af3",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://eb24de66bbfa42093a20d448cb2564655525cba0342035a42a37654e5d922deb",
+        "dweb:/ipfs/QmYgnFHamrgy5qurrxVLR1qDb7MirvGEoxCVwqiF1YvDMf"
+      ]
+    },
+    "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+      "keccak256": "0xfc40fb05166e90621012a05da452eaa14315f16ccf51833fb9c824c40809b06b",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://0c048116af61532acce61f77cdf6e1a4c0195e1d9d2f297c9016b4463e526163",
+        "dweb:/ipfs/QmfZ3hZ21ur1ysZsKdXh53LJ3GNZF9CK2UFD8QnAPi4wAJ"
+      ]
+    },
+    "@openzeppelin/contracts/utils/Context.sol": {
+      "keccak256": "0xa1a93462fa05ab3ebbde01971ce1c6fb415761fbaab2710b70d0fbe1a53b0689",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://44fedd57d91bcaf205e97d8bc00ddbff05375e32a53bd30f7bfc49a629cc4439",
+        "dweb:/ipfs/QmbBJN3zuGqmma6Bdij4AN5zHmgF7txVU1kzrU6rCyWvsW"
+      ]
+    },
+    "contracts/IStWSX.sol": {
+      "keccak256": "0xe4959e871f51f5cf0e7058d10f048e840914b19ee0fadc4865225ad25e03de24",
+      "license": "GPL-3.0",
+      "urls": [
+        "bzz-raw://f6bd31e146cfc1fb9e2f38b4b560672ae534e702dbe421a7166573389041e022",
+        "dweb:/ipfs/QmPonheb2hb8XUBukCkGdWiAtkJwdfMwFUBAceGMSVUFeZ"
+      ]
+    },
+    "contracts/WstWSX.sol": {
+      "keccak256": "0x6108419251340ffba6dd488d0efbbaf493faa3a17455ae5b8b12434c554802f9",
+      "license": "GPL-3.0",
+      "urls": [
+        "bzz-raw://31bdc676df105c256161bb6ac46e855b15c096ac4f76f7543750a4ae8d7e3e3f",
+        "dweb:/ipfs/QmW4gbrQ9MTCNSTuVEQJqpCbpXXRRGieSEcXyWvR88k7rb"
+      ]
+    }
+  },
+  "version": 1
+}

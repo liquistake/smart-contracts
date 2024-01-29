@@ -53,12 +53,10 @@
 			"approve(address,uint256)": "095ea7b3",
 			"balanceOf(address)": "70a08231",
 			"decimals()": "313ce567",
-			"decreaseAllowance(address,uint256)": "a457c2d7",
 			"getPooledWSXByShares(uint256)": "ca23e7fb",
 			"getSharesByPooledWSX(uint256)": "afad0a75",
 			"getTotalPooledWSX()": "1dd43aaa",
 			"getTotalShares()": "d5002f2e",
-			"increaseAllowance(address,uint256)": "39509351",
 			"name()": "06fdde03",
 			"sharesOf(address)": "f5eb42dc",
 			"symbol()": "95d89b41",
@@ -259,30 +257,6 @@
 		{
 			"inputs": [
 				{
-					"internalType": "address",
-					"name": "_spender",
-					"type": "address"
-				},
-				{
-					"internalType": "uint256",
-					"name": "_subtractedValue",
-					"type": "uint256"
-				}
-			],
-			"name": "decreaseAllowance",
-			"outputs": [
-				{
-					"internalType": "bool",
-					"name": "",
-					"type": "bool"
-				}
-			],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
 					"internalType": "uint256",
 					"name": "_sharesAmount",
 					"type": "uint256"
@@ -342,30 +316,6 @@
 				}
 			],
 			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "_spender",
-					"type": "address"
-				},
-				{
-					"internalType": "uint256",
-					"name": "_addedValue",
-					"type": "uint256"
-				}
-			],
-			"name": "increaseAllowance",
-			"outputs": [
-				{
-					"internalType": "bool",
-					"name": "",
-					"type": "bool"
-				}
-			],
-			"stateMutability": "nonpayable",
 			"type": "function"
 		},
 		{

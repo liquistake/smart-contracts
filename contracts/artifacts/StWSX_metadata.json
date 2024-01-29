@@ -1,0 +1,1686 @@
+{
+  "compiler": {
+    "version": "0.8.19+commit.7dd6d404"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "dao",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "validator",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "wsx",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "stakingProxy",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "compoundStakeProxy",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "inputs": [],
+        "name": "AccessControlBadConfirmation",
+        "type": "error"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "neededRole",
+            "type": "bytes32"
+          }
+        ],
+        "name": "AccessControlUnauthorizedAccount",
+        "type": "error"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "adminAddress",
+            "type": "address"
+          }
+        ],
+        "name": "AdminAdded",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "adminAddress",
+            "type": "address"
+          }
+        ],
+        "name": "AdminRemoved",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "Approval",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "daoAddress",
+            "type": "address"
+          }
+        ],
+        "name": "DAOAddressChanged",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amountDeposited",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "sharesIssued",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "stWSXReceived",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "mintFee",
+            "type": "uint256"
+          }
+        ],
+        "name": "Deposit",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "feeAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "FeesCollected",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "newMaxSlippage",
+            "type": "uint256"
+          }
+        ],
+        "name": "MaxSlippageChanged",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "newMintFee",
+            "type": "uint256"
+          }
+        ],
+        "name": "MintFeeChanged",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "oracleAddress",
+            "type": "address"
+          }
+        ],
+        "name": "OracleAdded",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "oracleAddress",
+            "type": "address"
+          }
+        ],
+        "name": "OracleRemoved",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "RequestUnstake",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "newRewardFee",
+            "type": "uint256"
+          }
+        ],
+        "name": "RewardFeeChanged",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "periodLength",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "rewardsAmount",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "totalWSXBeforeReward",
+            "type": "uint256"
+          }
+        ],
+        "name": "RewardsDistributed",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "previousAdminRole",
+            "type": "bytes32"
+          },
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "newAdminRole",
+            "type": "bytes32"
+          }
+        ],
+        "name": "RoleAdminChanged",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          }
+        ],
+        "name": "RoleGranted",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          }
+        ],
+        "name": "RoleRevoked",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "preRebaseTokenAmount",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "postRebaseTokenAmount",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "sharesAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "SharesBurnt",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "preTotalShares",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "preTotalEther",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "postTotalShares",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "postTotalEther",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "sharesMintedAsFees",
+            "type": "uint256"
+          }
+        ],
+        "name": "TokenRebased",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "Transfer",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "sharesValue",
+            "type": "uint256"
+          }
+        ],
+        "name": "TransferShares",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "WithdrawalClaimed",
+        "type": "event"
+      },
+      {
+        "inputs": [],
+        "name": "DAO_ADDRESS",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "DECIMAL_PRESCISION",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "DEFAULT_ADMIN_ROLE",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "MINIMUM_DEPOSIT_AMOUNT",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "ORACLE_ROLE",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "adminAddress",
+            "type": "address"
+          }
+        ],
+        "name": "addAdmin",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "oracleAddress",
+            "type": "address"
+          }
+        ],
+        "name": "addOracle",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_owner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "_spender",
+            "type": "address"
+          }
+        ],
+        "name": "allowance",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "spender",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "approve",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_account",
+            "type": "address"
+          }
+        ],
+        "name": "balanceOf",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "calculateMaxSlippage",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "calculateMintFee",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "calculateRewardFee",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "claim",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "decimals",
+        "outputs": [
+          {
+            "internalType": "uint8",
+            "name": "",
+            "type": "uint8"
+          }
+        ],
+        "stateMutability": "pure",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "deposit",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getPendingWithdrawAmount",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_sharesAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "getPooledWSXByShares",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          }
+        ],
+        "name": "getRoleAdmin",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_wsxAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "getSharesByPooledWSX",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getTotalPooledWSX",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getTotalShares",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "grantRole",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "hasRole",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "lastRewardsReport",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "lastUnstakeTime",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "maxSlippage",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "mintFee",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "name",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "stateMutability": "pure",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "numOracles",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address[]",
+            "name": "rewardTokenList",
+            "type": "address[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "amountOutMins",
+            "type": "uint256[]"
+          }
+        ],
+        "name": "oracleClaimRewards",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "oracleUnstake",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "oracleWithdrawUnstaked",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "adminAddress",
+            "type": "address"
+          }
+        ],
+        "name": "removeAdmin",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "oracleAddress",
+            "type": "address"
+          }
+        ],
+        "name": "removeOracle",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "callerConfirmation",
+            "type": "address"
+          }
+        ],
+        "name": "renounceRole",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "revokeRole",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "rewardFee",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "daoAddress",
+            "type": "address"
+          }
+        ],
+        "name": "setDAOAddress",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "newMaxSlippage",
+            "type": "uint256"
+          }
+        ],
+        "name": "setMaxSlippage",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "newMintFee",
+            "type": "uint256"
+          }
+        ],
+        "name": "setMintFee",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "newRewardFee",
+            "type": "uint256"
+          }
+        ],
+        "name": "setRewardFee",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_account",
+            "type": "address"
+          }
+        ],
+        "name": "sharesOf",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes4",
+            "name": "interfaceId",
+            "type": "bytes4"
+          }
+        ],
+        "name": "supportsInterface",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "symbol",
+        "outputs": [
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "stateMutability": "pure",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "totalPooledWSX",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "totalSupply",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_recipient",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "_amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "transfer",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_sender",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "_recipient",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "_amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "transferFrom",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_recipient",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "_sharesAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "transferShares",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_sender",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "_recipient",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "_sharesAmount",
+            "type": "uint256"
+          }
+        ],
+        "name": "transferSharesFrom",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "unstake",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "adr",
+            "type": "address"
+          }
+        ],
+        "name": "unstakeAvailableTimeOf",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "adr",
+            "type": "address"
+          }
+        ],
+        "name": "unstakeRequestAmountOf",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "adr",
+            "type": "address"
+          }
+        ],
+        "name": "unstakeRequestTimeOf",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "unstakedWSX",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "waitingToUnstake",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ],
+    "devdoc": {
+      "custom:dev-run-script": "scripts/deploy.ts",
+      "details": "StWSX is derived from `IStWSX`.",
+      "errors": {
+        "AccessControlBadConfirmation()": [
+          {
+            "details": "The caller of a function is not the expected one. NOTE: Don't confuse with {AccessControlUnauthorizedAccount}."
+          }
+        ],
+        "AccessControlUnauthorizedAccount(address,bytes32)": [
+          {
+            "details": "The `account` is missing a role."
+          }
+        ]
+      },
+      "events": {
+        "Approval(address,address,uint256)": {
+          "details": "Emitted when the allowance of a `spender` for an `owner` is set by a call to {approve}. `value` is the new allowance."
+        },
+        "RoleAdminChanged(bytes32,bytes32,bytes32)": {
+          "details": "Emitted when `newAdminRole` is set as ``role``'s admin role, replacing `previousAdminRole` `DEFAULT_ADMIN_ROLE` is the starting admin for all roles, despite {RoleAdminChanged} not being emitted signaling this."
+        },
+        "RoleGranted(bytes32,address,address)": {
+          "details": "Emitted when `account` is granted `role`. `sender` is the account that originated the contract call, an admin role bearer except when using {AccessControl-_setupRole}."
+        },
+        "RoleRevoked(bytes32,address,address)": {
+          "details": "Emitted when `account` is revoked `role`. `sender` is the account that originated the contract call:   - if using `revokeRole`, it is the admin role bearer   - if using `renounceRole`, it is the role bearer (i.e. `account`)"
+        },
+        "SharesBurnt(address,uint256,uint256,uint256)": {
+          "details": "Reports simultaneously burnt shares amount and corresponding stETH amount. The stETH amount is calculated twice: before and after the burning incurred rebase.",
+          "params": {
+            "account": "holder of the burnt shares",
+            "postRebaseTokenAmount": "amount of stETH the burnt shares corresponded to after the burn",
+            "preRebaseTokenAmount": "amount of stETH the burnt shares corresponded to before the burn",
+            "sharesAmount": "amount of burnt shares"
+          }
+        },
+        "Transfer(address,address,uint256)": {
+          "details": "Emitted when `value` tokens are moved from one account (`from`) to another (`to`). Note that `value` may be zero."
+        },
+        "TransferShares(address,address,uint256)": {
+          "details": "emitted in pair with an ERC20-defined `Transfer` event."
+        }
+      },
+      "kind": "dev",
+      "methods": {
+        "allowance(address,address)": {
+          "details": "This value changes when `approve` or `transferFrom` is called.",
+          "returns": {
+            "_0": "the remaining number of tokens that `_spender` is allowed to spend on behalf of `_owner` through `transferFrom`. This is zero by default."
+          }
+        },
+        "approve(address,uint256)": {
+          "details": "See {IERC20-approve}. NOTE: If `value` is the maximum `uint256`, the allowance is not updated on `transferFrom`. This is semantically equivalent to an infinite approval. Requirements: - `spender` cannot be the zero address."
+        },
+        "balanceOf(address)": {
+          "details": "Balances are dynamic and equal the `_account`'s share in the amount of the total WSX controlled by the protocol. See `sharesOf`.",
+          "returns": {
+            "_0": "the amount of tokens owned by the `_account`."
+          }
+        },
+        "decimals()": {
+          "returns": {
+            "_0": "the number of decimals for getting user representation of a token amount."
+          }
+        },
+        "getPooledWSXByShares(uint256)": {
+          "returns": {
+            "_0": "the amount of WSX that corresponds to `_sharesAmount` token shares."
+          }
+        },
+        "getRoleAdmin(bytes32)": {
+          "details": "Returns the admin role that controls `role`. See {grantRole} and {revokeRole}. To change a role's admin, use {_setRoleAdmin}."
+        },
+        "getSharesByPooledWSX(uint256)": {
+          "returns": {
+            "_0": "the amount of shares that corresponds to `_wsxAmount` protocol-controlled WSX."
+          }
+        },
+        "getTotalPooledWSX()": {
+          "details": "The sum of all WSX balances in the protocol, equals to the total supply of stWSX.",
+          "returns": {
+            "_0": "the entire amount of WSX controlled by the protocol."
+          }
+        },
+        "getTotalShares()": {
+          "details": "The sum of all accounts' shares can be an arbitrary number, therefore it is necessary to store it in order to calculate each account's relative share.",
+          "returns": {
+            "_0": "the total amount of shares in existence."
+          }
+        },
+        "grantRole(bytes32,address)": {
+          "details": "Grants `role` to `account`. If `account` had not been already granted `role`, emits a {RoleGranted} event. Requirements: - the caller must have ``role``'s admin role. May emit a {RoleGranted} event."
+        },
+        "hasRole(bytes32,address)": {
+          "details": "Returns `true` if `account` has been granted `role`."
+        },
+        "name()": {
+          "returns": {
+            "_0": "the name of the token."
+          }
+        },
+        "renounceRole(bytes32,address)": {
+          "details": "Revokes `role` from the calling account. Roles are often managed via {grantRole} and {revokeRole}: this function's purpose is to provide a mechanism for accounts to lose their privileges if they are compromised (such as when a trusted device is misplaced). If the calling account had been revoked `role`, emits a {RoleRevoked} event. Requirements: - the caller must be `callerConfirmation`. May emit a {RoleRevoked} event."
+        },
+        "revokeRole(bytes32,address)": {
+          "details": "Revokes `role` from `account`. If `account` had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must have ``role``'s admin role. May emit a {RoleRevoked} event."
+        },
+        "sharesOf(address)": {
+          "returns": {
+            "_0": "the amount of shares owned by `_account`."
+          }
+        },
+        "supportsInterface(bytes4)": {
+          "details": "See {IERC165-supportsInterface}."
+        },
+        "symbol()": {
+          "returns": {
+            "_0": "the symbol of the token, usually a shorter version of the name."
+          }
+        },
+        "totalSupply()": {
+          "details": "Always equals to `_getTotalPooledWSX()` since token amount is pegged to the total amount of WSX controlled by the protocol.",
+          "returns": {
+            "_0": "the amount of tokens in existence."
+          }
+        },
+        "transfer(address,uint256)": {
+          "details": "The `_amount` argument is the amount of tokens, not shares.",
+          "returns": {
+            "_0": "a boolean value indicating whether the operation succeeded. Emits a `Transfer` event. Emits a `TransferShares` event. Requirements: - `_recipient` cannot be the zero address. - the caller must have a balance of at least `_amount`. - the contract must not be paused."
+          }
+        },
+        "transferFrom(address,address,uint256)": {
+          "details": "The `_amount` argument is the amount of tokens, not shares.",
+          "returns": {
+            "_0": "a boolean value indicating whether the operation succeeded. Emits a `Transfer` event. Emits a `TransferShares` event. Emits an `Approval` event indicating the updated allowance. Requirements: - `_sender` and `_recipient` cannot be the zero addresses. - `_sender` must have a balance of at least `_amount`. - the caller must have allowance for `_sender`'s tokens of at least `_amount`. - the contract must not be paused."
+          }
+        },
+        "transferShares(address,uint256)": {
+          "details": "The `_sharesAmount` argument is the amount of shares, not tokens.",
+          "returns": {
+            "_0": "amount of transferred tokens. Emits a `TransferShares` event. Emits a `Transfer` event. Requirements: - `_recipient` cannot be the zero address. - the caller must have at least `_sharesAmount` shares. - the contract must not be paused."
+          }
+        },
+        "transferSharesFrom(address,address,uint256)": {
+          "details": "The `_sharesAmount` argument is the amount of shares, not tokens.",
+          "returns": {
+            "_0": "amount of transferred tokens. Emits a `TransferShares` event. Emits a `Transfer` event. Requirements: - `_sender` and `_recipient` cannot be the zero addresses. - `_sender` must have at least `_sharesAmount` shares. - the caller must have allowance for `_sender`'s tokens of at least `getPooledWSXByShares(_sharesAmount)`. - the contract must not be paused."
+          }
+        }
+      },
+      "title": "Liquid staking pool implementation LiquiStake is a SX Network liquid staking protocol solving the problem of frozen WSX staked with validators being unavailable for transfers and DeFi. Since balances of all token holders change when the amount of total pooled WSX changes, this token cannot fully implement ERC20 standard: it only emits `Transfer` events upon explicit transfer between holders. In contrast, when LiquiStake oracle reports rewards, no Transfer events are generated: doing so would require emitting an event for each token holder and thus running an unbounded loop. ---",
+      "version": 1
+    },
+    "userdoc": {
+      "events": {
+        "SharesBurnt(address,uint256,uint256,uint256)": {
+          "notice": "An executed `burnShares` request"
+        },
+        "TransferShares(address,address,uint256)": {
+          "notice": "An executed shares transfer from `sender` to `recipient`."
+        }
+      },
+      "kind": "user",
+      "methods": {
+        "transfer(address,uint256)": {
+          "notice": "Moves `_amount` tokens from the caller's account to the `_recipient` account."
+        },
+        "transferFrom(address,address,uint256)": {
+          "notice": "Moves `_amount` tokens from `_sender` to `_recipient` using the allowance mechanism. `_amount` is then deducted from the caller's allowance."
+        },
+        "transferShares(address,uint256)": {
+          "notice": "Moves `_sharesAmount` token shares from the caller's account to the `_recipient` account."
+        },
+        "transferSharesFrom(address,address,uint256)": {
+          "notice": "Moves `_sharesAmount` token shares from the `_sender` account to the `_recipient` account."
+        }
+      },
+      "version": 1
+    }
+  },
+  "settings": {
+    "compilationTarget": {
+      "contracts/StWSX.sol": "StWSX"
+    },
+    "evmVersion": "paris",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "remappings": []
+  },
+  "sources": {
+    "@openzeppelin/contracts/access/AccessControl.sol": {
+      "keccak256": "0xdbafb2145e39cd0d5aa402318980a8dde744363f3612c1f7c24c9b36328c7f8e",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://e4f040139f8c5a7df5813d4012c761d2e109364f7da127d25d06677eb70c0620",
+        "dweb:/ipfs/QmSTF7L3A5rrqDs4R57auFBdEPmEayFnydYrzW7FquuBo9"
+      ]
+    },
+    "@openzeppelin/contracts/access/IAccessControl.sol": {
+      "keccak256": "0x39d2e7ac401f0c137fe714301a045ddca0be34b7ba6d51181124af2e03043660",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://39664c89323d3d6143965ea8fde6f2082a0e82a460a50f4ada630117acea35a3",
+        "dweb:/ipfs/QmP92vVbDwXm8j5J2MS9ao7FhrCVTueYh56U4YQw6taZPz"
+      ]
+    },
+    "@openzeppelin/contracts/security/ReentrancyGuard.sol": {
+      "keccak256": "0xa535a5df777d44e945dd24aa43a11e44b024140fc340ad0dfe42acf4002aade1",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://41319e7f621f2dc3733511332c4fd032f8e32ad2aa7fd6f665c19741d9941a34",
+        "dweb:/ipfs/QmcYR3bd862GD1Bc7jwrU9bGxrhUu5na1oP964bDCu2id1"
+      ]
+    },
+    "@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+      "keccak256": "0x4ce6e9f30dba5ae30f26321dc851b669caf3f953f8c832304d05df2a523f1af3",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://eb24de66bbfa42093a20d448cb2564655525cba0342035a42a37654e5d922deb",
+        "dweb:/ipfs/QmYgnFHamrgy5qurrxVLR1qDb7MirvGEoxCVwqiF1YvDMf"
+      ]
+    },
+    "@openzeppelin/contracts/utils/Context.sol": {
+      "keccak256": "0xa1a93462fa05ab3ebbde01971ce1c6fb415761fbaab2710b70d0fbe1a53b0689",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://44fedd57d91bcaf205e97d8bc00ddbff05375e32a53bd30f7bfc49a629cc4439",
+        "dweb:/ipfs/QmbBJN3zuGqmma6Bdij4AN5zHmgF7txVU1kzrU6rCyWvsW"
+      ]
+    },
+    "@openzeppelin/contracts/utils/introspection/ERC165.sol": {
+      "keccak256": "0x79b8b95a610c8823997c639f22dc502a64047a042f62c58b6feb04a82668a8f8",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://30644b34d99b7031c71f6988fcc67cdca98dbad285f27f9e99b5d1fa63323c69",
+        "dweb:/ipfs/QmTapMESvnHMBkkkdkEefTyP87jXoNitV5U8nNHxLWEWEQ"
+      ]
+    },
+    "@openzeppelin/contracts/utils/introspection/IERC165.sol": {
+      "keccak256": "0xfcc9759dead7965c69d4c7916e53d23d236d696465b890ca65e4ecdee8ad9812",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://393550054d90396dc6cbf7ac9f3d7ef3855c09cf63694992317842f97bf5eda9",
+        "dweb:/ipfs/QmPQD1gmLAigP23AoPnVUe1n6vwCzcHDwFrqdqa59nik7D"
+      ]
+    },
+    "contracts/ICompoundStakeProxy.sol": {
+      "keccak256": "0x14d0b4513febb64ff238025d7d2393a0e33fa10d1b070be5ce43c24b6f6eed80",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://5cadda342e3b54c1bf6681f52361b2d94912d2e06b62e2802adc77f4025fd5a9",
+        "dweb:/ipfs/QmU1aa8xVuYRsN9PZcpLMhyqHqmc3yFhS2vVwvbDePuHFZ"
+      ]
+    },
+    "contracts/IStWSX.sol": {
+      "keccak256": "0xe4959e871f51f5cf0e7058d10f048e840914b19ee0fadc4865225ad25e03de24",
+      "license": "GPL-3.0",
+      "urls": [
+        "bzz-raw://f6bd31e146cfc1fb9e2f38b4b560672ae534e702dbe421a7166573389041e022",
+        "dweb:/ipfs/QmPonheb2hb8XUBukCkGdWiAtkJwdfMwFUBAceGMSVUFeZ"
+      ]
+    },
+    "contracts/IStakingProxy.sol": {
+      "keccak256": "0x06458b51f5733e194bd063082420a5b8659c263d9b1920599dfc0bce710c4f02",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://069bd3e3babe4afa626097278e9e3b38bb9d69b39970d857f56987286bdae93b",
+        "dweb:/ipfs/QmPEq3L62DQrQYvZtrxvp1nNy7HBGG3rc8Fyii2UQbFQKz"
+      ]
+    },
+    "contracts/StWSX.sol": {
+      "keccak256": "0x338acaaecb28a89c360d69f7ef595b3a238889b29c53af29b5e1c9a7a1e7a5b3",
+      "license": "GPL-3.0",
+      "urls": [
+        "bzz-raw://79cd3c63635ae082f1f9054c15d48a2377655a0236f5563bedc145a76e5596bd",
+        "dweb:/ipfs/QmVhTSSJfftziRaexFzXy5WXE38rowF5NiJrtMNH9hvwHw"
+      ]
+    }
+  },
+  "version": 1
+}

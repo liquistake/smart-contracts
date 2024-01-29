@@ -5,6 +5,7 @@ pragma solidity ^0.8.19;
 import "./IStWSX.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
+
 /**
  * @title stWSX token wrapper with static balances.
  * @dev It's an ERC20 token that represents the account's share of the total
@@ -19,7 +20,8 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
  *
  *
  */
-contract WstWSX is ERC20 {
+contract WstWSX is ERC20{
+
     IStWSX public stWSX; // the target token we will wrap
     uint256 private constant ONE_TOKEN = 10 ** 18; // Value of 1 complete token
 
@@ -46,12 +48,15 @@ contract WstWSX is ERC20 {
         uint256 wstWSXAmount = stWSX.getSharesByPooledWSX(_stWSXAmount);
         _mint(msg.sender, wstWSXAmount);
         stWSX.transferFrom(msg.sender, address(this), _stWSXAmount);
+
+        emit Wrap(msg.sender, _stWSXAmount, wstWSXAmount);
+
         return wstWSXAmount;
     }
 
     /**
      * @notice Exchanges wstWSX to stWSX
-     * @param _wstWSXAmount amount of wstWSX to uwrap in exchange for stWSX
+     * @param _wstWSXAmount amount of wstWSX to unwrap in exchange for stWSX
      * @dev Requirements:
      *  - `_wstWSXAmount` must be non-zero
      *  - msg.sender must have at least `_wstWSXAmount` wstWSX.
@@ -62,6 +67,7 @@ contract WstWSX is ERC20 {
         uint256 stWSXAmount = stWSX.getPooledWSXByShares(_wstWSXAmount);
         _burn(msg.sender, _wstWSXAmount);
         stWSX.transfer(msg.sender, stWSXAmount);
+        emit Unwrap(msg.sender, _wstWSXAmount, stWSXAmount);
         return stWSXAmount;
     }
 
@@ -70,9 +76,7 @@ contract WstWSX is ERC20 {
      * @param _stWSXAmount amount of stWSX
      * @return Amount of wstWSX for a given stWSX amount
      */
-    function getWstWSXByStWSX(
-        uint256 _stWSXAmount
-    ) external view returns (uint256) {
+    function getWstWSXByStWSX(uint256 _stWSXAmount) external view returns (uint256) {
         return stWSX.getSharesByPooledWSX(_stWSXAmount);
     }
 
@@ -81,9 +85,7 @@ contract WstWSX is ERC20 {
      * @param _wstWSXAmount amount of wstWSX
      * @return Amount of stWSX for a given wstWSX amount
      */
-    function getStWSXByWstWSX(
-        uint256 _wstWSXAmount
-    ) external view returns (uint256) {
+    function getStWSXByWstWSX(uint256 _wstWSXAmount) external view returns (uint256) {
         return stWSX.getPooledWSXByShares(_wstWSXAmount);
     }
 
@@ -97,9 +99,14 @@ contract WstWSX is ERC20 {
 
     /**
      * @notice Get amount of wstWSX for a one stWSX
-     * @return Amount of wstWSX for a 1 wstWSX
+     * @return Amount of wstWSX for a 1 stWSX
      */
     function tokensPerStWSX() external view returns (uint256) {
         return stWSX.getSharesByPooledWSX(ONE_TOKEN);
     }
+
+    // called when user wraps tokens
+    event Wrap(address sender, uint stWSXWrapped, uint wstWSXMinted);
+    // called when user unwraps tokens
+    event Unwrap(address sender, uint wstWSXUnwrapped, uint stWSXUnwrapped);
 }

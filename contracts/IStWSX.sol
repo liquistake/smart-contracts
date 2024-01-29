@@ -4,31 +4,34 @@ pragma solidity 0.8.19;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 abstract contract IStWSX is IERC20 {
-    address internal constant INITIAL_TOKEN_HOLDER = address(0xdead);
-    uint256 internal constant INFINITE_ALLOWANCE = ~uint256(0);
 
-    /**
+    address constant internal INITIAL_TOKEN_HOLDER = address(0xdead);
+    uint256 constant internal INFINITE_ALLOWANCE = ~uint256(0);
+
+
+     /**
      * @dev StWSX balances are dynamic and are calculated based on the accounts' shares
      * and the total amount of Ether controlled by the protocol. Account shares aren't
      * normalized, so the contract also stores the sum of all shares to calculate
      * each account's token balance which equals to:
      *
      *   shares[account] * _getTotalPooledEther() / _getTotalShares()
-     */
-    mapping(address => uint256) private shares;
+    */
+    mapping (address => uint256) private shares;
 
     /**
      * @dev Allowances are nominated in tokens, not token shares.
      */
-    mapping(address => mapping(address => uint256)) private allowances;
+    mapping (address => mapping (address => uint256)) private allowances;
+
 
     uint256 private totalShares;
 
     /**
-     * @notice An executed shares transfer from `sender` to `recipient`.
-     *
-     * @dev emitted in pair with an ERC20-defined `Transfer` event.
-     */
+      * @notice An executed shares transfer from `sender` to `recipient`.
+      *
+      * @dev emitted in pair with an ERC20-defined `Transfer` event.
+      */
     event TransferShares(
         address indexed from,
         address indexed to,
@@ -76,6 +79,7 @@ abstract contract IStWSX is IERC20 {
         return 18;
     }
 
+
     /**
      * @return the amount of tokens in existence.
      *
@@ -120,10 +124,7 @@ abstract contract IStWSX is IERC20 {
      *
      * @dev The `_amount` argument is the amount of tokens, not shares.
      */
-    function transfer(
-        address _recipient,
-        uint256 _amount
-    ) external returns (bool) {
+    function transfer(address _recipient, uint256 _amount) external returns (bool) {
         _transfer(msg.sender, _recipient, _amount);
         return true;
     }
@@ -134,10 +135,7 @@ abstract contract IStWSX is IERC20 {
      *
      * @dev This value changes when `approve` or `transferFrom` is called.
      */
-    function allowance(
-        address _owner,
-        address _spender
-    ) external view returns (uint256) {
+    function allowance(address _owner, address _spender) external view returns (uint256) {
         return allowances[_owner][_spender];
     }
 
@@ -161,62 +159,12 @@ abstract contract IStWSX is IERC20 {
      *
      * @dev The `_amount` argument is the amount of tokens, not shares.
      */
-    function transferFrom(
-        address _sender,
-        address _recipient,
-        uint256 _amount
-    ) external returns (bool) {
+    function transferFrom(address _sender, address _recipient, uint256 _amount) external returns (bool) {
         _spendAllowance(_sender, msg.sender, _amount);
         _transfer(_sender, _recipient, _amount);
         return true;
     }
 
-    /**
-     * @notice Atomically increases the allowance granted to `_spender` by the caller by `_addedValue`.
-     *
-     * This is an alternative to `approve` that can be used as a mitigation for
-     * problems described in:
-     * https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b709eae01d1da91902d06ace340df6b324e6f049/contracts/token/ERC20/IERC20.sol#L57
-     * Emits an `Approval` event indicating the updated allowance.
-     *
-     * Requirements:
-     *
-     * - `_spender` cannot be the the zero address.
-     */
-    function increaseAllowance(
-        address _spender,
-        uint256 _addedValue
-    ) external returns (bool) {
-        _approve(
-            msg.sender,
-            _spender,
-            allowances[msg.sender][_spender] += _addedValue
-        );
-        return true;
-    }
-
-    /**
-     * @notice Atomically decreases the allowance granted to `_spender` by the caller by `_subtractedValue`.
-     *
-     * This is an alternative to `approve` that can be used as a mitigation for
-     * problems described in:
-     * https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b709eae01d1da91902d06ace340df6b324e6f049/contracts/token/ERC20/IERC20.sol#L57
-     * Emits an `Approval` event indicating the updated allowance.
-     *
-     * Requirements:
-     *
-     * - `_spender` cannot be the zero address.
-     * - `_spender` must have allowance for the caller of at least `_subtractedValue`.
-     */
-    function decreaseAllowance(
-        address _spender,
-        uint256 _subtractedValue
-    ) external returns (bool) {
-        uint256 currentAllowance = allowances[msg.sender][_spender];
-        require(currentAllowance >= _subtractedValue, "ALLOWANCE_BELOW_ZERO");
-        _approve(msg.sender, _spender, currentAllowance -= _subtractedValue);
-        return true;
-    }
 
     /**
      * @return the total amount of shares in existence.
@@ -238,19 +186,15 @@ abstract contract IStWSX is IERC20 {
     /**
      * @return the amount of shares that corresponds to `_wsxAmount` protocol-controlled WSX.
      */
-    function getSharesByPooledWSX(
-        uint256 _wsxAmount
-    ) public view returns (uint256) {
-        return (_wsxAmount * _getTotalShares()) / _getTotalPooledWSX();
+    function getSharesByPooledWSX(uint256 _wsxAmount) public view returns (uint256) {
+        return _wsxAmount * _getTotalShares() / _getTotalPooledWSX();
     }
 
     /**
      * @return the amount of WSX that corresponds to `_sharesAmount` token shares.
      */
-    function getPooledWSXByShares(
-        uint256 _sharesAmount
-    ) public view returns (uint256) {
-        return (_sharesAmount * _getTotalPooledWSX()) / _getTotalShares();
+    function getPooledWSXByShares(uint256 _sharesAmount) public view returns (uint256) {
+        return _sharesAmount * _getTotalPooledWSX() / _getTotalShares();
     }
 
     /**
@@ -268,18 +212,10 @@ abstract contract IStWSX is IERC20 {
      *
      * @dev The `_sharesAmount` argument is the amount of shares, not tokens.
      */
-    function transferShares(
-        address _recipient,
-        uint256 _sharesAmount
-    ) external returns (uint256) {
+    function transferShares(address _recipient, uint256 _sharesAmount) external returns (uint256) {
         _transferShares(msg.sender, _recipient, _sharesAmount);
         uint256 tokensAmount = getPooledWSXByShares(_sharesAmount);
-        _emitTransferEvents(
-            msg.sender,
-            _recipient,
-            tokensAmount,
-            _sharesAmount
-        );
+        _emitTransferEvents(msg.sender, _recipient, tokensAmount, _sharesAmount);
         return tokensAmount;
     }
 
@@ -300,9 +236,7 @@ abstract contract IStWSX is IERC20 {
      * @dev The `_sharesAmount` argument is the amount of shares, not tokens.
      */
     function transferSharesFrom(
-        address _sender,
-        address _recipient,
-        uint256 _sharesAmount
+        address _sender, address _recipient, uint256 _sharesAmount
     ) external returns (uint256) {
         uint256 tokensAmount = getPooledWSXByShares(_sharesAmount);
         _spendAllowance(_sender, msg.sender, tokensAmount);
@@ -311,7 +245,7 @@ abstract contract IStWSX is IERC20 {
         return tokensAmount;
     }
 
-    /**
+     /**
      * @return the total amount (in wei) of WSX controlled by the protocol.
      * @dev This is used for calculating tokens from shares and vice versa.
      * @dev This function is required to be implemented in a derived contract.
@@ -323,11 +257,7 @@ abstract contract IStWSX is IERC20 {
      * Emits a `Transfer` event.
      * Emits a `TransferShares` event.
      */
-    function _transfer(
-        address _sender,
-        address _recipient,
-        uint256 _amount
-    ) internal {
+    function _transfer(address _sender, address _recipient, uint256 _amount) internal {
         uint256 _sharesToTransfer = getSharesByPooledWSX(_amount);
         _transferShares(_sender, _recipient, _sharesToTransfer);
         _emitTransferEvents(_sender, _recipient, _amount, _sharesToTransfer);
@@ -345,11 +275,7 @@ abstract contract IStWSX is IERC20 {
      * - `_owner` cannot be the zero address.
      * - `_spender` cannot be the zero address.
      */
-    function _approve(
-        address _owner,
-        address _spender,
-        uint256 _amount
-    ) internal {
+    function _approve(address _owner, address _spender, uint256 _amount) internal {
         require(_owner != address(0), "APPROVE_FROM_ZERO_ADDR");
         require(_spender != address(0), "APPROVE_TO_ZERO_ADDR");
 
@@ -367,10 +293,7 @@ abstract contract IStWSX is IERC20 {
      *
      * - `spender` cannot be the zero address.
      */
-    function approve(
-        address spender,
-        uint256 value
-    ) public virtual returns (bool) {
+    function approve(address spender, uint256 value) public virtual returns (bool) {
         address owner = msg.sender;
         _approve(owner, spender, value);
         return true;
@@ -384,11 +307,7 @@ abstract contract IStWSX is IERC20 {
      *
      * Might emit an {Approval} event.
      */
-    function _spendAllowance(
-        address _owner,
-        address _spender,
-        uint256 _amount
-    ) internal {
+    function _spendAllowance(address _owner, address _spender, uint256 _amount) internal {
         uint256 currentAllowance = allowances[_owner][_spender];
         if (currentAllowance != INFINITE_ALLOWANCE) {
             require(currentAllowance >= _amount, "ALLOWANCE_EXCEEDED");
@@ -420,11 +339,7 @@ abstract contract IStWSX is IERC20 {
      * - `_sender` must hold at least `_sharesAmount` shares.
      * - the contract must not be paused.
      */
-    function _transferShares(
-        address _sender,
-        address _recipient,
-        uint256 _sharesAmount
-    ) internal {
+    function _transferShares(address _sender, address _recipient, uint256 _sharesAmount) internal {
         require(_sender != address(0), "TRANSFER_FROM_ZERO_ADDR");
         require(_recipient != address(0), "TRANSFER_TO_ZERO_ADDR");
         require(_recipient != address(this), "TRANSFER_TO_STETH_CONTRACT");
@@ -433,7 +348,7 @@ abstract contract IStWSX is IERC20 {
         require(_sharesAmount <= currentSenderShares, "BALANCE_EXCEEDED");
 
         shares[_sender] = currentSenderShares - _sharesAmount;
-        shares[_recipient] = shares[_recipient] + _sharesAmount;
+        shares[_recipient] = shares[_recipient] +_sharesAmount;
     }
 
     /**
@@ -447,10 +362,7 @@ abstract contract IStWSX is IERC20 {
      * - `_recipient` cannot be the zero address.
      * - the contract must not be paused.
      */
-    function _mintShares(
-        address _recipient,
-        uint256 _sharesAmount
-    ) internal returns (uint256 newTotalShares) {
+    function _mintShares(address _recipient, uint256 _sharesAmount) internal returns (uint256 newTotalShares) {
         require(_recipient != address(0), "MINT_TO_ZERO_ADDR");
 
         newTotalShares = _getTotalShares() + _sharesAmount;
@@ -476,10 +388,7 @@ abstract contract IStWSX is IERC20 {
      * - `_account` must hold at least `_sharesAmount` shares.
      * - the contract must not be paused.
      */
-    function _burnShares(
-        address _account,
-        uint256 _sharesAmount
-    ) internal returns (uint256 newTotalShares) {
+    function _burnShares(address _account, uint256 _sharesAmount) internal returns (uint256 newTotalShares) {
         require(_account != address(0), "BURN_FROM_ZERO_ADDR");
 
         uint256 accountShares = shares[_account];
@@ -494,12 +403,7 @@ abstract contract IStWSX is IERC20 {
 
         uint256 postRebaseTokenAmount = getPooledWSXByShares(_sharesAmount);
 
-        emit SharesBurnt(
-            _account,
-            preRebaseTokenAmount,
-            postRebaseTokenAmount,
-            _sharesAmount
-        );
+        emit SharesBurnt(_account, preRebaseTokenAmount, postRebaseTokenAmount, _sharesAmount);
 
         // Notice: we're not emitting a Transfer event to the zero address here since shares burn
         // works by redistributing the amount of tokens corresponding to the burned shares between
@@ -513,12 +417,7 @@ abstract contract IStWSX is IERC20 {
     /**
      * @dev Emits {Transfer} and {TransferShares} events
      */
-    function _emitTransferEvents(
-        address _from,
-        address _to,
-        uint _tokenAmount,
-        uint256 _sharesAmount
-    ) internal {
+    function _emitTransferEvents(address _from, address _to, uint _tokenAmount, uint256 _sharesAmount) internal {
         emit Transfer(_from, _to, _tokenAmount);
         emit TransferShares(_from, _to, _sharesAmount);
     }
@@ -526,16 +425,8 @@ abstract contract IStWSX is IERC20 {
     /**
      * @dev Emits {Transfer} and {TransferShares} events where `from` is 0 address. Indicates mint events.
      */
-    function _emitTransferAfterMintingShares(
-        address _to,
-        uint256 _sharesAmount
-    ) internal {
-        _emitTransferEvents(
-            address(0),
-            _to,
-            getPooledWSXByShares(_sharesAmount),
-            _sharesAmount
-        );
+    function _emitTransferAfterMintingShares(address _to, uint256 _sharesAmount) internal {
+        _emitTransferEvents(address(0), _to, getPooledWSXByShares(_sharesAmount), _sharesAmount);
     }
 
     /**
@@ -545,4 +436,5 @@ abstract contract IStWSX is IERC20 {
         _mintShares(INITIAL_TOKEN_HOLDER, _sharesAmount);
         _emitTransferAfterMintingShares(INITIAL_TOKEN_HOLDER, _sharesAmount);
     }
+
 }
