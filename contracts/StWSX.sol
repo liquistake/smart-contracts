@@ -43,7 +43,7 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
     uint256 public constant DECIMAL_PRESCISION = 10000;
 
     // keeps track of the number of oracle providers
-    uint public numOracles = 0;
+    uint public numOracles;
 
     // @dev the following can be updated by the DEFAULT_ADMIN_ROLE
     address private VALIDATOR_ADDRESS;
@@ -58,17 +58,14 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
     uint public mintFee = 100;
     uint public rewardFee = 1000;
 
-    // slippage tollerated when compounding WSX as bips 100 = 1%
-    uint public maxSlippage = 200;
-
     // keeps track of total WSX in contract including reported rewards
-    uint public totalPooledWSX = 0;
+    uint public totalPooledWSX;
 
     // waiting to be unstaked
-    uint public waitingToUnstake = 0;
+    uint public waitingToUnstake;
 
     // amount that can be claimed
-    uint public unstakedWSX = 0;
+    uint public unstakedWSX;
 
     // accounting reports
     mapping(bytes32 => uint256) private _accountingReports;
@@ -78,7 +75,7 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
     // pending unstake times
     mapping(address => uint256) private _latestUnstakeTime;
     // the last time that this contract has unstaked WSX
-    uint256 public lastUnstakeTime = 0;
+    uint256 public lastUnstakeTime;
     // last time of reported rewards
     uint256 public lastRewardsReport;
 
@@ -319,16 +316,19 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
 
         lastRewardsReport = block.timestamp;
 
-        // add the WSX to the pool
-        totalPooledWSX += rewardAmount;
-
         // calculate the protocol reward fee
         uint rewardFeeAmount = calculateRewardFee(rewardAmount);
+
+        // add the rewards net of fees to the pool
+        totalPooledWSX += (rewardAmount - rewardFeeAmount);
 
         // put all WSX into pool since it's auto staked
         // mint shares to the DAO for the portion that is the fee
         uint rewardFeesShares = getSharesByPooledWSX(rewardFeeAmount);
         _mintShares(DAO_ADDRESS, rewardFeesShares);
+
+        // add the reward fees WSX to the pool
+        totalPooledWSX += rewardFeeAmount;
 
         emit OracleClaimedRewards(rewardAmount);
         emit RewardsDistributed(periodLength, rewardAmount, preWSX);
@@ -365,16 +365,6 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
         return rewardFeeAmount;
     }
 
-    /*
-    * @notice This function calculates the maximum tolerated slippage for a given amount.
-    * @param amount The amount that will be converted before slippage
-    * @return maxSlippageAmount The amount that will be converted after slippage
-    */
-    function calculateMaxSlippage(uint amount) public view returns (uint){
-        uint maxSlippageAmount = (amount * (DECIMAL_PRESCISION - maxSlippage)) / DECIMAL_PRESCISION;
-        return maxSlippageAmount;
-    }
-
     // Admin functions
 
     /*
@@ -383,8 +373,8 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
     * @param newMintFee The new mintFee in bips 100 = 1%
     */
     function setMintFee(uint256 newMintFee) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(newMintFee < 0, "Cannot be less than zero.");
-        require(newMintFee >= 3500, "Cannot be greater than 20%.");
+        require(newMintFee >= 0, "Cannot be less than zero.");
+        require(newMintFee <= 3500, "Cannot be greater than 35%.");
         mintFee = newMintFee;
         emit MintFeeChanged(newMintFee);
     }
@@ -395,22 +385,10 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
     * @param newRewardFee The new rewardFee in bips 100 = 1%
     */
     function setRewardFee(uint256 newRewardFee) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(newRewardFee < 0, "Cannot be less than zero.");
-        require(newRewardFee >= 3500, "Cannot be greater than 20%.");
+        require(newRewardFee >= 0, "Cannot be less than zero.");
+        require(newRewardFee <= 3500, "Cannot be greater than 35%.");
         rewardFee = newRewardFee;
         emit RewardFeeChanged(newRewardFee);
-    }
-
-    /*
-    * @notice This function updates the maximum tolerated slippage.
-    * @notice Only and Admin can update max slippage.
-    * @param newMaxSlippage The new max slippage in bips 100 = 1%
-    */
-    function setMaxSlippage(uint256 newMaxSlippage) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(newMaxSlippage < 0, "Cannot be less than zero.");
-        require(newMaxSlippage >= 3500, "Cannot be greater than 20%.");
-        maxSlippage = newMaxSlippage;
-        emit MaxSlippageChanged(newMaxSlippage);
     }
 
     /*
@@ -433,6 +411,59 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
         require(compoundStakeProxyAddress != address(0), "address must be non-0");
         _compoundStakeProxy = ICompoundStakeProxy(compoundStakeProxyAddress);
         emit CompoundStakeProxyAddressChanged(compoundStakeProxyAddress);
+    }
+
+    /*
+    * @notice This function provides logic for granting of admin and oracle roles.
+    * @notice Only an Admin can add a role to an account.
+    * @param role The role to grant
+    * @param account The new address to grant a role to
+    */
+    function grantRole(bytes32 role, address account) public override onlyRole(DEFAULT_ADMIN_ROLE) {
+        if(role == ORACLE_ROLE){
+            require(!hasRole(ORACLE_ROLE, account), "Oracle role already added.");
+
+            numOracles++;
+
+            _grantRole(role, account);
+
+            emit OracleAdded(account);
+        }else if(role == DEFAULT_ADMIN_ROLE){
+            require(!hasRole(DEFAULT_ADMIN_ROLE, account), "Admin role already added.");
+
+            _grantRole(role, account);
+
+            emit AdminAdded(account);
+        }else{
+            _grantRole(role, account);
+        }
+    }
+
+    /*
+    * @notice This function provides logic for revoking of admin and oracle roles.
+    * @notice Only an Admin can revoke a role to an account.
+    * @param role The role to revoke
+    * @param account The address to revoke a role from
+    */
+    function revokeRole(bytes32 role, address account) public override onlyRole(DEFAULT_ADMIN_ROLE) {
+        if(role == ORACLE_ROLE){
+            require(!hasRole(ORACLE_ROLE, account), "Address is not a recognized oracle.");
+            require (numOracles > 1, "Cannot remove the only oracle.");
+
+            _revokeRole(ORACLE_ROLE, account);
+            numOracles--;
+
+            emit OracleRemoved(account);
+        }else if(role == DEFAULT_ADMIN_ROLE){
+            require(!hasRole(DEFAULT_ADMIN_ROLE, account), "Address is not a recognized admin.");
+            require(msg.sender != account, "Admin cannot revoke its own role.");
+
+            _revokeRole(DEFAULT_ADMIN_ROLE, account);
+
+            emit AdminRemoved(account);
+        }else{
+            _grantRole(role, account);
+        }
     }
 
     /*
@@ -519,7 +550,6 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
     event OracleClaimedRewards(uint claimedRewards);
 
     // admin function event reporting
-    event MaxSlippageChanged(uint newMaxSlippage);
     event MintFeeChanged(uint newMintFee);
     event RewardFeeChanged(uint newRewardFee);
     event OracleAdded(address oracleAddress);

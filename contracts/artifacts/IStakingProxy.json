@@ -1,276 +1,276 @@
 {
-	"deploy": {
-		"VM:-": {
-			"linkReferences": {},
-			"autoDeployLib": true
-		},
-		"main:1": {
-			"linkReferences": {},
-			"autoDeployLib": true
-		},
-		"ropsten:3": {
-			"linkReferences": {},
-			"autoDeployLib": true
-		},
-		"rinkeby:4": {
-			"linkReferences": {},
-			"autoDeployLib": true
-		},
-		"kovan:42": {
-			"linkReferences": {},
-			"autoDeployLib": true
-		},
-		"goerli:5": {
-			"linkReferences": {},
-			"autoDeployLib": true
-		},
-		"Custom": {
-			"linkReferences": {},
-			"autoDeployLib": true
-		}
-	},
-	"data": {
-		"bytecode": {
-			"functionDebugData": {},
-			"generatedSources": [],
-			"linkReferences": {},
-			"object": "",
-			"opcodes": "",
-			"sourceMap": ""
-		},
-		"deployedBytecode": {
-			"functionDebugData": {},
-			"generatedSources": [],
-			"immutableReferences": {},
-			"linkReferences": {},
-			"object": "",
-			"opcodes": "",
-			"sourceMap": ""
-		},
-		"gasEstimates": null,
-		"methodIdentifiers": {
-			"_pendingWithdrawAmounts(address)": "a3b344a6",
-			"_withdrawDelay()": "64dbd9d2",
-			"getRewardTokenList()": "969133a8",
-			"getStaker(address)": "a23c44b1",
-			"pendingRewards(address,address)": "80ac8228",
-			"rewardTokenListLength()": "f9b69835",
-			"stake(uint256,address)": "7acb7757",
-			"unstake(uint256)": "2e17de78",
-			"withdrawUnstaked()": "847fdd12"
-		}
-	},
-	"abi": [
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "",
-					"type": "address"
-				}
-			],
-			"name": "_pendingWithdrawAmounts",
-			"outputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [],
-			"name": "_withdrawDelay",
-			"outputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [],
-			"name": "getRewardTokenList",
-			"outputs": [
-				{
-					"internalType": "address[]",
-					"name": "",
-					"type": "address[]"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "addr",
-					"type": "address"
-				}
-			],
-			"name": "getStaker",
-			"outputs": [
-				{
-					"components": [
-						{
-							"internalType": "address",
-							"name": "addr",
-							"type": "address"
-						},
-						{
-							"internalType": "uint256",
-							"name": "amount",
-							"type": "uint256"
-						},
-						{
-							"internalType": "bool",
-							"name": "isDelegateValidator",
-							"type": "bool"
-						},
-						{
-							"internalType": "uint256",
-							"name": "delegateValidatorIndex",
-							"type": "uint256"
-						},
-						{
-							"internalType": "string",
-							"name": "name",
-							"type": "string"
-						},
-						{
-							"internalType": "string",
-							"name": "description",
-							"type": "string"
-						},
-						{
-							"internalType": "uint256",
-							"name": "commission",
-							"type": "uint256"
-						},
-						{
-							"internalType": "uint256",
-							"name": "delegatorStakedAmount",
-							"type": "uint256"
-						},
-						{
-							"internalType": "uint256",
-							"name": "delegatorCount",
-							"type": "uint256"
-						},
-						{
-							"internalType": "bool",
-							"name": "isDelegator",
-							"type": "bool"
-						},
-						{
-							"internalType": "address",
-							"name": "parent",
-							"type": "address"
-						},
-						{
-							"internalType": "bool",
-							"name": "enableDelegation",
-							"type": "bool"
-						},
-						{
-							"internalType": "bool",
-							"name": "approvedToDelegate",
-							"type": "bool"
-						}
-					],
-					"internalType": "struct IStakingProxy.Staker",
-					"name": "",
-					"type": "tuple"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "tokenAddr",
-					"type": "address"
-				},
-				{
-					"internalType": "address",
-					"name": "stakerAddr",
-					"type": "address"
-				}
-			],
-			"name": "pendingRewards",
-			"outputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				},
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [],
-			"name": "rewardTokenListLength",
-			"outputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "amount",
-					"type": "uint256"
-				},
-				{
-					"internalType": "address",
-					"name": "validator",
-					"type": "address"
-				}
-			],
-			"name": "stake",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "amount",
-					"type": "uint256"
-				}
-			],
-			"name": "unstake",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [],
-			"name": "withdrawUnstaked",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		}
-	]
+  "deploy": {
+    "VM:-": {
+      "linkReferences": {},
+      "autoDeployLib": true
+    },
+    "main:1": {
+      "linkReferences": {},
+      "autoDeployLib": true
+    },
+    "ropsten:3": {
+      "linkReferences": {},
+      "autoDeployLib": true
+    },
+    "rinkeby:4": {
+      "linkReferences": {},
+      "autoDeployLib": true
+    },
+    "kovan:42": {
+      "linkReferences": {},
+      "autoDeployLib": true
+    },
+    "goerli:5": {
+      "linkReferences": {},
+      "autoDeployLib": true
+    },
+    "Custom": {
+      "linkReferences": {},
+      "autoDeployLib": true
+    }
+  },
+  "data": {
+    "bytecode": {
+      "functionDebugData": {},
+      "generatedSources": [],
+      "linkReferences": {},
+      "object": "",
+      "opcodes": "",
+      "sourceMap": ""
+    },
+    "deployedBytecode": {
+      "functionDebugData": {},
+      "generatedSources": [],
+      "immutableReferences": {},
+      "linkReferences": {},
+      "object": "",
+      "opcodes": "",
+      "sourceMap": ""
+    },
+    "gasEstimates": null,
+    "methodIdentifiers": {
+      "_pendingWithdrawAmounts(address)": "a3b344a6",
+      "_withdrawDelay()": "64dbd9d2",
+      "getRewardTokenList()": "969133a8",
+      "getStaker(address)": "a23c44b1",
+      "pendingRewards(address,address)": "80ac8228",
+      "rewardTokenListLength()": "f9b69835",
+      "stake(uint256,address)": "7acb7757",
+      "unstake(uint256)": "2e17de78",
+      "withdrawUnstaked()": "847fdd12"
+    }
+  },
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "_pendingWithdrawAmounts",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "_withdrawDelay",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getRewardTokenList",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "getStaker",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "addr",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "isDelegateValidator",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "delegateValidatorIndex",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "commission",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "delegatorStakedAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "delegatorCount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "isDelegator",
+              "type": "bool"
+            },
+            {
+              "internalType": "address",
+              "name": "parent",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "enableDelegation",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "approvedToDelegate",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct IStakingProxy.Staker",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tokenAddr",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "stakerAddr",
+          "type": "address"
+        }
+      ],
+      "name": "pendingRewards",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "rewardTokenListLength",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "validator",
+          "type": "address"
+        }
+      ],
+      "name": "stake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "unstake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "withdrawUnstaked",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ]
 }
