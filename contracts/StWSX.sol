@@ -466,61 +466,29 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
         }
     }
 
-    /*
-    * @notice This function grants permission for an address to become an oracle.
-    * @notice Only an Admin can add an oracle.
-    * @param oracleAddress The new oracle address
-    */
-    function addOracle(address oracleAddress) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(!hasRole(ORACLE_ROLE, oracleAddress), "Oracle already added.");
+    function renounceRole(bytes32 role, address callerConfirmation) public override {
+        if (callerConfirmation != msg.sender) {
+            revert AccessControlBadConfirmation();
+        }
 
-        _grantRole(ORACLE_ROLE, oracleAddress);
-        numOracles++;
+        if(role == ORACLE_ROLE){
+            require(!hasRole(ORACLE_ROLE, callerConfirmation), "Address is not a recognized oracle.");
+            require (numOracles > 1, "Cannot remove the only oracle.");
 
-        emit OracleAdded(oracleAddress);
-    }
+            _revokeRole(ORACLE_ROLE, callerConfirmation);
+            numOracles--;
 
-    /*
-    * @notice This function removes permission for an address that is an oracle.
-    * @notice Only an Admin can remove an oracle.
-    * @param oracleAddress The oracle address to remove permissions from
-    */
-    function removeOracle(address oracleAddress) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(!hasRole(ORACLE_ROLE, oracleAddress), "Address is not a recognized oracle.");
-        require (numOracles > 1, "Cannot remove the only oracle.");
+            emit OracleRemoved(callerConfirmation);
+        }else if(role == DEFAULT_ADMIN_ROLE){
+            require(!hasRole(DEFAULT_ADMIN_ROLE, callerConfirmation), "Address is not a recognized admin.");
+            require(msg.sender != callerConfirmation, "Admin cannot revoke its own role.");
 
-        _revokeRole(ORACLE_ROLE, oracleAddress);
-        numOracles--;
+            _revokeRole(DEFAULT_ADMIN_ROLE, callerConfirmation);
 
-        emit OracleRemoved(oracleAddress);
-
-    }
-
-    /*
-    * @notice This function grants permission for an address to become an admin.
-    * @notice Only an Admin can add an admin.
-    * @param oracleAddress The new oracle address
-    */
-    function addAdmin(address adminAddress) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(!hasRole(DEFAULT_ADMIN_ROLE, adminAddress), "Admin already added.");
-
-        _grantRole(DEFAULT_ADMIN_ROLE, adminAddress);
-
-        emit AdminAdded(adminAddress);
-    }
-
-    /*
-    * @notice This function removes permission for an address that is an admin.
-    * @notice Only an Admin can remove an admin.
-    * @param adminAddress The admin address to remove permissions from
-    */
-    function removeAdmin(address adminAddress) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(!hasRole(DEFAULT_ADMIN_ROLE, adminAddress), "Address is not a recognized admin.");
-
-        _revokeRole(DEFAULT_ADMIN_ROLE, adminAddress);
-
-        emit AdminRemoved(adminAddress);
-
+            emit AdminRemoved(callerConfirmation);
+        }else{
+            _grantRole(role, callerConfirmation);
+        }
     }
 
     // called to report rewards value distributed
