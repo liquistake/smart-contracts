@@ -42,8 +42,9 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
     uint256 public constant MINIMUM_DEPOSIT_AMOUNT = 10**6;
     uint256 public constant DECIMAL_PRESCISION = 10000;
 
-    // keeps track of the number of oracle providers
+    // keeps track of the number of admins & oracle providers
     uint public numOracles;
+    uint public numAdmins;
 
     // @dev the following can be updated by the DEFAULT_ADMIN_ROLE
     address private VALIDATOR_ADDRESS;
@@ -81,6 +82,7 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
 
     constructor (address dao, address validator, address wsx, address stakingProxy, address compoundStakeProxy) {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender); // make the deployer admin
+        numAdmins++;
         _grantRole(ORACLE_ROLE, msg.sender); // make the deployer provider temporarily as well
         numOracles++;
 
@@ -431,6 +433,8 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
         }else if(role == DEFAULT_ADMIN_ROLE){
             require(!hasRole(DEFAULT_ADMIN_ROLE, account), "Admin role already added.");
 
+            numAdmins++;
+
             _grantRole(role, account);
 
             emit AdminAdded(account);
@@ -459,10 +463,11 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
             require(msg.sender != account, "Admin cannot revoke its own role.");
 
             _revokeRole(DEFAULT_ADMIN_ROLE, account);
+            numAdmins--;
 
             emit AdminRemoved(account);
         }else{
-            _grantRole(role, account);
+            _revokeRole(role, account);
         }
     }
 
@@ -481,13 +486,14 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
             emit OracleRemoved(callerConfirmation);
         }else if(role == DEFAULT_ADMIN_ROLE){
             require(!hasRole(DEFAULT_ADMIN_ROLE, callerConfirmation), "Address is not a recognized admin.");
-            require(msg.sender != callerConfirmation, "Admin cannot revoke its own role.");
+            require (numAdmins > 1, "Cannot remove the only admin.");
 
             _revokeRole(DEFAULT_ADMIN_ROLE, callerConfirmation);
+            numAdmins--;
 
             emit AdminRemoved(callerConfirmation);
         }else{
-            _grantRole(role, callerConfirmation);
+            _revokeRole(role, callerConfirmation);
         }
     }
 
