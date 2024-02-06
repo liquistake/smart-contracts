@@ -375,7 +375,6 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
     * @param newMintFee The new mintFee in bips 100 = 1%
     */
     function setMintFee(uint256 newMintFee) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(newMintFee >= 0, "Cannot be less than zero.");
         require(newMintFee <= 3500, "Cannot be greater than 35%.");
         mintFee = newMintFee;
         emit MintFeeChanged(newMintFee);
@@ -387,7 +386,6 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
     * @param newRewardFee The new rewardFee in bips 100 = 1%
     */
     function setRewardFee(uint256 newRewardFee) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(newRewardFee >= 0, "Cannot be less than zero.");
         require(newRewardFee <= 3500, "Cannot be greater than 35%.");
         rewardFee = newRewardFee;
         emit RewardFeeChanged(newRewardFee);
@@ -451,7 +449,7 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
     */
     function revokeRole(bytes32 role, address account) public override onlyRole(DEFAULT_ADMIN_ROLE) {
         if(role == ORACLE_ROLE){
-            require(!hasRole(ORACLE_ROLE, account), "Address is not a recognized oracle.");
+            require(hasRole(ORACLE_ROLE, account), "Address is not a recognized oracle.");
             require (numOracles > 1, "Cannot remove the only oracle.");
 
             _revokeRole(ORACLE_ROLE, account);
@@ -459,7 +457,7 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
 
             emit OracleRemoved(account);
         }else if(role == DEFAULT_ADMIN_ROLE){
-            require(!hasRole(DEFAULT_ADMIN_ROLE, account), "Address is not a recognized admin.");
+            require(hasRole(DEFAULT_ADMIN_ROLE, account), "Address is not a recognized admin.");
             require(msg.sender != account, "Admin cannot revoke its own role.");
 
             _revokeRole(DEFAULT_ADMIN_ROLE, account);
@@ -477,7 +475,7 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
         }
 
         if(role == ORACLE_ROLE){
-            require(!hasRole(ORACLE_ROLE, callerConfirmation), "Address is not a recognized oracle.");
+            require(hasRole(ORACLE_ROLE, callerConfirmation), "Address is not a recognized oracle.");
             require (numOracles > 1, "Cannot remove the only oracle.");
 
             _revokeRole(ORACLE_ROLE, callerConfirmation);
@@ -485,7 +483,7 @@ contract StWSX is IStWSX, AccessControl, ReentrancyGuard {
 
             emit OracleRemoved(callerConfirmation);
         }else if(role == DEFAULT_ADMIN_ROLE){
-            require(!hasRole(DEFAULT_ADMIN_ROLE, callerConfirmation), "Address is not a recognized admin.");
+            require(hasRole(DEFAULT_ADMIN_ROLE, callerConfirmation), "Address is not a recognized admin.");
             require (numAdmins > 1, "Cannot remove the only admin.");
 
             _revokeRole(DEFAULT_ADMIN_ROLE, callerConfirmation);
